@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="05e094839bb145299f51c75918d5aff9" Name="Diagram1">
+        <EntityTypeShape EntityType="firma3Model.Firma" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="firma3Model.Opstina" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="firma3Model.FK_Firma_Opstina" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="firma3Model.ViewFirme1" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="firma3Model.Racun" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="firma3Model.FK_Racun_Firma" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
