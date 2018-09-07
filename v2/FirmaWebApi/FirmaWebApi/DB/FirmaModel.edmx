@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="firma3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Firma">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="Adresa" Type="nvarchar(max)" />
+          <Property Name="JIB" Type="nvarchar(max)" />
+          <Property Name="OpstinaID" Type="int" Nullable="false" />
+          <Property Name="PDVBroj" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Opstina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Racun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="date" Nullable="false" />
+          <Property Name="Iznos" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'firma3.firma3.ViewFirme1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewFirme1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="Adresa" Type="nvarchar(max)" />
+          <Property Name="JIB" Type="nvarchar(max)" />
+          <Property Name="Opstina" Type="nvarchar" MaxLength="50" />
+          <Property Name="PDVBroj" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Firma_Opstina">
+          <End Role="Opstina" Type="Self.Opstina" Multiplicity="1" />
+          <End Role="Firma" Type="Self.Firma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opstina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Firma">
+              <PropertyRef Name="OpstinaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Racun_Firma">
+          <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+          <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Racun">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="procFirme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="firma3" />
+        <EntityContainer Name="firma3ModelStoreContainer">
+          <EntitySet Name="Firma" EntityType="Self.Firma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opstina" EntityType="Self.Opstina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racun" EntityType="Self.Racun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewFirme1" EntityType="Self.ViewFirme1" store:Type="Views" store:Schema="firma3">
+            <DefiningQuery>SELECT 
+    [ViewFirme1].[ID] AS [ID], 
+    [ViewFirme1].[Naziv] AS [Naziv], 
+    [ViewFirme1].[Adresa] AS [Adresa], 
+    [ViewFirme1].[JIB] AS [JIB], 
+    [ViewFirme1].[Opstina] AS [Opstina], 
+    [ViewFirme1].[PDVBroj] AS [PDVBroj]
+    FROM [firma3].[ViewFirme1] AS [ViewFirme1]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Firma_Opstina" Association="Self.FK_Firma_Opstina">
+            <End Role="Opstina" EntitySet="Opstina" />
+            <End Role="Firma" EntitySet="Firma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Firma" Association="Self.FK_Racun_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Racun" EntitySet="Racun" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="firma3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Firma">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JIB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpstinaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Opstina" Relationship="Self.FK_Firma_Opstina" FromRole="Firma" ToRole="Opstina" />
+          <Property Name="PDVBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Racun" Relationship="firma3Model.FK_Racun_Firma" FromRole="Firma" ToRole="Racun" />
+        </EntityType>
+        <EntityType Name="Opstina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Firma" Relationship="Self.FK_Firma_Opstina" FromRole="Opstina" ToRole="Firma" />
+        </EntityType>
+        <Association Name="FK_Firma_Opstina">
+          <End Role="Opstina" Type="Self.Opstina" Multiplicity="1" />
+          <End Role="Firma" Type="Self.Firma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opstina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Firma">
+              <PropertyRef Name="OpstinaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="firma3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Firma" EntityType="Self.Firma" />
+          <EntitySet Name="Opstina" EntityType="Self.Opstina" />
+          <AssociationSet Name="FK_Firma_Opstina" Association="Self.FK_Firma_Opstina">
+            <End Role="Opstina" EntitySet="Opstina" />
+            <End Role="Firma" EntitySet="Firma" />
+          </AssociationSet>
+          <EntitySet Name="ViewFirme1" EntityType="firma3Model.ViewFirme1" />
+          <FunctionImport Name="procFirme" ReturnType="Collection(firma3Model.procFirme_Result)" />
+          <EntitySet Name="Racun" EntityType="firma3Model.Racun" />
+          <AssociationSet Name="FK_Racun_Firma" Association="firma3Model.FK_Racun_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Racun" EntitySet="Racun" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ViewFirme1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JIB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Opstina" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PDVBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="procFirme_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="String" Name="Adresa" Nullable="true" />
+          <Property Type="String" Name="JIB" Nullable="true" />
+          <Property Type="String" Name="Opstina" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PDVBroj" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="Racun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Iznos" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Firma" Relationship="firma3Model.FK_Racun_Firma" FromRole="Racun" ToRole="Firma" />
+        </EntityType>
+        <Association Name="FK_Racun_Firma">
+          <End Type="firma3Model.Firma" Role="Firma" Multiplicity="1" />
+          <End Type="firma3Model.Racun" Role="Racun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Racun">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="firma3ModelStoreContainer" CdmEntityContainer="firma3Entities">
+          <EntitySetMapping Name="Firma">
+            <EntityTypeMapping TypeName="firma3Model.Firma">
+              <MappingFragment StoreEntitySet="Firma">
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="JIB" ColumnName="JIB" />
+                <ScalarProperty Name="OpstinaID" ColumnName="OpstinaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opstina">
+            <EntityTypeMapping TypeName="firma3Model.Opstina">
+              <MappingFragment StoreEntitySet="Opstina">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewFirme1">
+            <EntityTypeMapping TypeName="firma3Model.ViewFirme1">
+              <MappingFragment StoreEntitySet="ViewFirme1">
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
+                <ScalarProperty Name="Opstina" ColumnName="Opstina" />
+                <ScalarProperty Name="JIB" ColumnName="JIB" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="procFirme" FunctionName="firma3Model.Store.procFirme">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="firma3Model.procFirme_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="JIB" ColumnName="JIB" />
+                <ScalarProperty Name="Opstina" ColumnName="Opstina" />
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Racun">
+            <EntityTypeMapping TypeName="firma3Model.Racun">
+              <MappingFragment StoreEntitySet="Racun">
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
