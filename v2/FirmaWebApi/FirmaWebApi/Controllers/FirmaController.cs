@@ -47,7 +47,10 @@ namespace FirmaWebApi.Controllers
             List<FirmaPrikazi> firme = db.Firma.Select(s => new FirmaPrikazi {
                 ID=s.ID,
                 Naziv = s.Naziv,
+                JIB = s.JIB,
+                PDVBroj = s.PDVBroj,
                 Adresa = s.Adresa,
+                Opstina = s.Opstina.Naziv,
                 BrojRacuna = s.Racun.Count,
                 IznosBezPDV = s.Racun.Sum(r=>(decimal?) r.Iznos),
                 IznosSaPDV = s.Racun.Sum(r=> (decimal?)(r.Iznos * (decimal) 1.17))

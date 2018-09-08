@@ -18,17 +18,18 @@
 
 	<div class="container">
 
-		<label class="warning"> 
-		Upute za grešku "No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access."
-		<a href="https://stackoverflow.com/questions/20035101/why-does-my-javascript-get-a-no-access-control-allow-origin-header-is-present">stackoverflow</a>
-		</label>
+	<div id="alert-div" >
+		
+	</div>
+
+	
 
 
 		<br/>
 
 		<hr/>
 		<h4>Tabela za prikaz zapisa o firmima</h4>
-		<button onclick="PrikaziForma()" class="btn btn-primary">Prikaz</button>
+		<button onclick="BtnPrikazi()" class="btn btn-primary">Prikaz</button>
 
 		<table id="tabela" class="table table-bordered">
 			<thead>
@@ -77,14 +78,14 @@
 				<label>Opstina ID</label>
 				<input type="number" class="form-control" id="inputOpstinaID"  placeholder="Opstina ID">
 			</div>		  
-			<button class="btn btn-primary" onclick="UpdateAkcija()">Snimi</button>
+			<button class="btn btn-primary" onclick="BtnSnimi()">Snimi</button>
 		</form>
 	</div>
 
     <!-- jQuery first, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"  crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"  crossorigin="anonymous"></script>
 	
 	
     <!-- Optional JavaScript -->
