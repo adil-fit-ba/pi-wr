@@ -53,20 +53,23 @@ function BtnSnimi()
 	var podaci =  forma.serialize();
 	var url = baseUrl +"/Firma/Snimi";
 
-		
+	AlertPoruke(podaci);
 	$.ajax({
     type: "POST",
     url: url,
     data: podaci,
-    dataType: "json",
+    dataType: "html",
     success: function(p) {
-      AlertPoruke("Podaci su snimljeni" + p);
+		AlertPoruke("Podaci su snimljeni" + p);
     },
     error: function(p) {
-      	AlertPoruke("Podaic nisu snimljeni. " + p );
+      	AlertPoruke("Podaic nisu snimljeni. " + p  );
     }
+	});
+	
+	
+	
 
-});
 }
 
 

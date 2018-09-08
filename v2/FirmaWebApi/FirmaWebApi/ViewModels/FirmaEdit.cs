@@ -8,12 +8,12 @@ namespace FirmaWebApi.ViewModels
 {
     public class FirmaEdit
     {
-        public int ID;
-        public string Naziv;
-        public string Adresa;
-        public int OpstinaID;
+        public int ID { get; set; }
+        public string Naziv { get; set; }
+        public string Adresa { get; set; }
+        public int OpstinaID { get; set; }
 
-        public string JIB;
-        public string PDVBroj;
+        public string JIB { get; set; }
+        public string PDVBroj { get; set; }
     }
 }

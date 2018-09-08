@@ -23,24 +23,28 @@ namespace FirmaWebApi.Controllers
 
            return  new HttpStatusCodeResult(HttpStatusCode.OK);
         }
-
-        public ActionResult Snimi(String JIB, int ID)
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Snimi(FirmaEdit input)
         {
             Firma f;
-            if (ID == 0)
+            if (input.ID == 0)
             {
                 f = new Firma();
                 db.Firma.Add(f);
             }
             else
             {
-                f = db.Firma.Find(ID);
+                f = db.Firma.Find(input.ID);
             }
 
-            f.JIB = JIB;
-           
+            f.JIB = input.JIB;
+            f.OpstinaID = input.OpstinaID;
+            f.Naziv = input.Naziv;
+            f.PDVBroj = input.PDVBroj;
+            f.Adresa = input.Adresa;
 
             db.SaveChanges();
+
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
