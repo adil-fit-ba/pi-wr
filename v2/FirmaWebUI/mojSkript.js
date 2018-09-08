@@ -30,8 +30,9 @@ function BtnUpdate(firmaID)
 		$("#JIB").val(data.JIB);
 		$("#PDV").val(data.PDV);
 		$("#Adresa").val(data.Adresa);
-		$("#OpstinaID").val(data.OpstinaID);
 		
+		$("#OpstinaID>option").attr('selected', false);
+		$("#OpstinaID>option:eq(" + data.OpstinaID + ")").attr('selected', true);
 	});
 }
 
@@ -61,15 +62,13 @@ function BtnSnimi()
     dataType: "html",
     success: function(p) {
 		AlertPoruke("Podaci su snimljeni" + p);
+		BtnPrikazi();
     },
     error: function(p) {
       	AlertPoruke("Podaic nisu snimljeni. " + p  );
     }
 	});
 	
-	
-	
-
 }
 
 
@@ -121,11 +120,31 @@ function BtnPrikazi(){
 		
 }
 
+
+function LoadOpstine(){
+	
+	var url = baseUrl +"/Firma/GetOpstine";
+
+	
+	
+	$.getJSON(url , function(data) {
+		
+			
+		for(var i=0; i<data.length; i++)
+		{
+			var item = "<option value='" + data[i].ID + "'>" + data[i].Naziv + "</option>";
+			$("#OpstinaID").append(item);
+		}
+		
+		
+	});
+		
+}
 	
 	
 $( document ).ready(function() {
     console.log( "ready!" );
-	
+	LoadOpstine();
 	AlertPoruke("Aplikacija je učitana. Upute za grešku <i>No 'Access-Control-Allow-Origin' header is present...</i> možete naći na <a href='https://stackoverflow.com/questions/20035101/why-does-my-javascript-get-a-no-access-control-allow-origin-header-is-present'>stackoverflow</a>");
 	
 });

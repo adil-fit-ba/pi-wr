@@ -85,5 +85,15 @@ namespace FirmaWebApi.Controllers
 
             return Json(f, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetOpstine()
+        {
+            var f = db.Opstina.Select(s => new {
+                ID = s.ID,
+                Naziv = s.Naziv,
+            }).ToList();
+
+            return Json(f, JsonRequestBehavior.AllowGet);
+        }
     }
 }
