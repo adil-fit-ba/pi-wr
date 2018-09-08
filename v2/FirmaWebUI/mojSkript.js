@@ -1,46 +1,82 @@
-var baseUrl = "https://firma.wrd.app.fit.ba";
+var baseUrl = "http://localhost:60571/";
+
+var brojacMBox = 0;
 
 function AlertPoruke(poruka)
 {
+	var MBoxID= "MBox" + brojacMBox++;
 	var now = new Date(Date.now());
 	var formatted = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-	var x =  "<div class='alert alert-primary' role='alert'> " + formatted + ": " + poruka+ "</div>";
+	var x =  "<div class='alert alert-primary' role='alert' id='" + MBoxID + "'> " + formatted + ": " + poruka+ "</div>";
 
 	$("#alert-div").append(x);
 	
-	$(".alert").delay(5000).slideUp(200, function() {
+	$("#" + MBoxID).delay(5000).slideUp(200, function() {
     $(this).alert('close');
 });
 }
 
 function BtnUpdate(firmaID)
 {
-	var url = baseUrl +"/Firma/Dodaj";
+	var url = baseUrl +"/Firma/GetByID?ID="+firmaID;
+
+	AlertPoruke("Podaci se učitavaju sa servera...");
 	
-	
+	$.getJSON(url , function(data) {
+		AlertPoruke("Podaci su preuzeti sa servera...");
+		
+		$("#ID").val(data.ID);
+		$("#Naziv").val(data.Naziv);
+		$("#JIB").val(data.JIB);
+		$("#PDV").val(data.PDV);
+		$("#Adresa").val(data.Adresa);
+		$("#OpstinaID").val(data.OpstinaID);
+		
+	});
 }
 
 function BtnDodaj()
 {
-	var url = baseUrl +"/Firma/Dodaj";
+	AlertPoruke("Forma za dodavanje nove firme");
 	
-	
+	$("#ID").val(0);
+	$("#Naziv").val("");
+	$("#JIB").val("");
+	$("#PDV").val("");
+	$("#Adresa").val("");
+	$("#OpstinaID").val("");
 }
 
 function BtnSnimi()
 {
-	var url = baseUrl +"/Firma/Dodaj";
-	
-	
+	var forma = $("#UpdateForma");
+	var podaci =  forma.serialize();
+	var url = baseUrl +"/Firma/Snimi";
+
+		
+	$.ajax({
+    type: "POST",
+    url: url,
+    data: podaci,
+    dataType: "json",
+    success: function(p) {
+      AlertPoruke("Podaci su snimljeni" + p);
+    },
+    error: function(p) {
+      	AlertPoruke("Podaic nisu snimljeni. " + p );
+    }
+
+});
 }
 
 
 function BtnObrisi(firmaID)
 {
-	var url = baseUrl +"/Firma/Obrisi";
+	var url = baseUrl +"/Firma/Obrisi?ID="+firmaID;
 	
 	  $.post(url, function(data, status){
         alert("Obrisano: " + data + "\nStatus: " + status);
+		BtnPrikazi();
     });
 }
 
@@ -54,6 +90,8 @@ function BtnPrikazi(){
 		AlertPoruke("Podaci su preuzeti sa servera...");
 		var tbl_body = "";
 
+		var size= data.length;
+		
 		var i =0;
 		$.each(data, function() {
 			

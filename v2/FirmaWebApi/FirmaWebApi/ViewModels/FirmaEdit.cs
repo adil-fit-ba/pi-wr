@@ -6,18 +6,14 @@ using FirmaWebApi.DB;
 
 namespace FirmaWebApi.ViewModels
 {
-    public class FirmaPrikazi
+    public class FirmaEdit
     {
         public int ID;
         public string Naziv;
         public string Adresa;
-        public int BrojRacuna;
-        public decimal? IznosBezPDV;
-        public decimal? IznosSaPDV;
-
+        public int OpstinaID;
 
         public string JIB;
         public string PDVBroj;
-        public string Opstina;
     }
 }

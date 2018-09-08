@@ -5,33 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace FirmaWebApi.Controllers
 {
     public class FirmaController:Controller
     {
-        public ActionResult Stepenuj(int a, int b)
-        {
-            double r = Math.Pow(a, b);
+        firma3Entities db = new firma3Entities();
 
-            ViewData["rKey"] = r;
-
-            return View("Rezultat");
-        }
-
-        public string Kvadriraj(int a)
-        {
-            return (a *a).ToString();
-        }
-
-        public ActionResult Proba()
-        {
-            return View("Proba");
-        }
         public ActionResult Obrisi(int id)
         {
-            firma3Entities db = new firma3Entities();
             Firma f  = db.Firma.Find(id);
 
             db.Firma.Remove(f);
@@ -40,10 +24,30 @@ namespace FirmaWebApi.Controllers
            return  new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        public ActionResult Snimi(String JIB, int ID)
+        {
+            Firma f;
+            if (ID == 0)
+            {
+                f = new Firma();
+                db.Firma.Add(f);
+            }
+            else
+            {
+                f = db.Firma.Find(ID);
+            }
+
+            f.JIB = JIB;
+           
+
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
         public ActionResult Prikazi()
         {
-            firma3Entities db = new firma3Entities();
-
             List<FirmaPrikazi> firme = db.Firma.Select(s => new FirmaPrikazi {
                 ID=s.ID,
                 Naziv = s.Naziv,
@@ -57,10 +61,25 @@ namespace FirmaWebApi.Controllers
 
             }).ToList(); ;
 
-            
 
             return Json(firme, JsonRequestBehavior.AllowGet);
+        }
 
+        
+        public ActionResult GetByID(int ID)
+        {
+            FirmaEdit f = db.Firma.Where(x => x.ID==ID).Select(s => new FirmaEdit
+            {
+                ID = s.ID,
+                Naziv = s.Naziv,
+                JIB = s.JIB,
+                PDVBroj = s.PDVBroj,
+                Adresa = s.Adresa,
+                OpstinaID = s.OpstinaID,
+            }).SingleOrDefault(); 
+            
+
+            return Json(f, JsonRequestBehavior.AllowGet);
         }
     }
 }
