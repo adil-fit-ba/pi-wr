@@ -1,13 +1,20 @@
 var baseUrl = "https://firma.wrd.app.fit.ba";
 
-function UpdateForma(firmaID)
+function BtnUpdate(firmaID)
 {
 	var url = baseUrl +"/Firma/Dodaj";
 	
 	
 }
 
-function UpdateAkcija()
+function BtnDodaj()
+{
+	var url = baseUrl +"/Firma/Dodaj";
+	
+	
+}
+
+function BtnSnimi()
 {
 	var url = baseUrl +"/Firma/Dodaj";
 	
@@ -15,7 +22,7 @@ function UpdateAkcija()
 }
 
 
-function ObrisiAkcija(firmaID)
+function BtnObrisi(firmaID)
 {
 	var url = baseUrl +"/Firma/Obrisi";
 	
@@ -24,7 +31,7 @@ function ObrisiAkcija(firmaID)
     });
 }
 
-function PrikaziForma(){
+function BtnPrikazi(){
 	
 	var url = baseUrl +"/Firma/Prikazi";
 
@@ -42,8 +49,11 @@ function PrikaziForma(){
 
 				var firmaid = data[i].ID;
 				
-				tbl_row+= "<td> <button onclick='UpdateForma(" + firmaid + ")'>Update</button> </td>";
-				tbl_row+= "<td> <button onclick='ObrisiAkcija(" + firmaid + ")'>Obrisi</button> </td>";
+				tbl_row+= "<td>";
+				
+				tbl_row+= "<button onclick='UpdateForma(" + firmaid + ")'>Update</button>";
+				tbl_row+= "<button onclick='ObrisiAkcija(" + firmaid + ")'>Obrisi</button>";
+				tbl_row+= "</td>";
 				
 				tbl_body += "<tr>" + tbl_row + "</tr>";
 				i++;
