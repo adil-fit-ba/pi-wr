@@ -1,4 +1,4 @@
-var baseUrl = "http://localhost:60571/";
+var baseUrl = "https://firma.wrd.app.fit.ba/";
 
 var brojacMBox = 0;
 

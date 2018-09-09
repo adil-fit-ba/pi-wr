@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pi5aModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Faktura">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Datum" Type="date" Nullable="false" />
+          <Property Name="Iznos" Type="float" Nullable="false" />
+          <Property Name="KupacID" Type="int" />
+        </EntityType>
+        <EntityType Name="Kupac">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="Grad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'pi5a.pi5a.KupacView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KupacView">
+          <Key>
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Iznos" />
+          </Key>
+          <Property Name="Naziv" Type="nvarchar" MaxLength="50" />
+          <Property Name="Grad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Datum" Type="date" Nullable="false" />
+          <Property Name="Iznos" Type="float" Nullable="false" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Faktura_Kupac">
+          <End Role="Kupac" Type="Self.Kupac" Multiplicity="0..1" />
+          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kupac">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Faktura">
+              <PropertyRef Name="KupacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pi5aModelStoreContainer">
+          <EntitySet Name="Faktura" EntityType="Self.Faktura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kupac" EntityType="Self.Kupac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KupacView" EntityType="Self.KupacView" store:Type="Views" store:Schema="pi5a">
+            <DefiningQuery>SELECT 
+    [KupacView].[Naziv] AS [Naziv], 
+    [KupacView].[Grad] AS [Grad], 
+    [KupacView].[Datum] AS [Datum], 
+    [KupacView].[Iznos] AS [Iznos], 
+    [KupacView].[Adresa] AS [Adresa]
+    FROM [pi5a].[KupacView] AS [KupacView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Faktura_Kupac" Association="Self.FK_Faktura_Kupac">
+            <End Role="Kupac" EntitySet="Kupac" />
+            <End Role="Faktura" EntitySet="Faktura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pi5aModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Faktura">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Iznos" Type="Double" Nullable="false" />
+          <Property Name="KupacID" Type="Int32" />
+          <NavigationProperty Name="Kupac" Relationship="Self.FK_Faktura_Kupac" FromRole="Faktura" ToRole="Kupac" />
+        </EntityType>
+        <EntityType Name="Kupac">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Faktura" Relationship="Self.FK_Faktura_Kupac" FromRole="Kupac" ToRole="Faktura" />
+          <Property Name="Grad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Faktura_Kupac">
+          <End Role="Kupac" Type="Self.Kupac" Multiplicity="0..1" />
+          <End Role="Faktura" Type="Self.Faktura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kupac">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Faktura">
+              <PropertyRef Name="KupacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pi5aEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Faktura" EntityType="Self.Faktura" />
+          <EntitySet Name="Kupac" EntityType="Self.Kupac" />
+          <AssociationSet Name="FK_Faktura_Kupac" Association="Self.FK_Faktura_Kupac">
+            <End Role="Kupac" EntitySet="Kupac" />
+            <End Role="Faktura" EntitySet="Faktura" />
+          </AssociationSet>
+          <EntitySet Name="KupacView" EntityType="pi5aModel.KupacView" />
+        </EntityContainer>
+        <EntityType Name="KupacView">
+          <Key>
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Iznos" />
+          </Key>
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Grad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Iznos" Type="Double" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pi5aModelStoreContainer" CdmEntityContainer="pi5aEntities">
+          <EntitySetMapping Name="Faktura">
+            <EntityTypeMapping TypeName="pi5aModel.Faktura">
+              <MappingFragment StoreEntitySet="Faktura">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="KupacID" ColumnName="KupacID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kupac">
+            <EntityTypeMapping TypeName="pi5aModel.Kupac">
+              <MappingFragment StoreEntitySet="Kupac">
+                <ScalarProperty Name="Grad" ColumnName="Grad" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KupacView">
+            <EntityTypeMapping TypeName="pi5aModel.KupacView">
+              <MappingFragment StoreEntitySet="KupacView">
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Grad" ColumnName="Grad" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
